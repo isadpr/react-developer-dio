@@ -9,16 +9,23 @@ export const ButtonContainer = styled.button `
     padding: 2px 12px;
     min-width: 120px;
     width: 100%;
+    font-family: 'Open Sans';
 
     ${
         ({variant}) => variant !== "primary" && css `
             min-width: 167px;
             height: 33px;
 
+            
             background: #E4105D;
 
+            &:hover {
+                opacity: 0.6;
+                cursor: pointer;
+            }
+
             &::after {
-                content: '',
+                content: '';
                 position: absolute;
                 border: 1px solid #e4105D;
                 top: -5px;

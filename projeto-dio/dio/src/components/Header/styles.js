@@ -60,7 +60,7 @@ export const MenuRight = styled.a`
     font-style: 'normal';
     font-size: 12px;
     line-height: 25px;
-    color: #FFFFFF
+    color: #FFFFFF;
     margin-right: 12px;
     text-decoration: none;
 `
@@ -77,4 +77,5 @@ export const Input = styled.input `
     flex: 1;
     border: 0;
     color: #FFFFFF;
+    font-family: 'Open Sans';
 `
