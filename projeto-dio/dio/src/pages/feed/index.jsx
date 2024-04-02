@@ -17,9 +17,9 @@ const Feed = () => {
                 </Column>
                 <Column flex={1}>
                     <TitleHighlight># RANKING 5 TOP DA SEMANA</TitleHighlight>
-                    <UserInfo percentual={80} name="Isa" image=""/>
-                    <UserInfo percentual={80} name="Isa" image=""/>
-                    <UserInfo percentual={80} name="Isa" image=""/>
+                    <UserInfo percentual={80} name="Isa" image="https://avatars.githubusercontent.com/u/99506836?s=400&u=ad14ced68b75d624fa3455075c12510175883379&v=4"/>
+                    <UserInfo percentual={80} name="Isa" image="https://avatars.githubusercontent.com/u/99506836?s=400&u=ad14ced68b75d624fa3455075c12510175883379&v=4"/>
+                    <UserInfo percentual={80} name="Isa" image="https://avatars.githubusercontent.com/u/99506836?s=400&u=ad14ced68b75d624fa3455075c12510175883379&v=4"/>
                 </Column>
             </Container>
         </div>
