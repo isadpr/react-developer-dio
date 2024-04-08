@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button"
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
@@ -8,9 +7,9 @@ import { MdEmail, MdLock, MdPerson } from 'react-icons/md'
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { api } from '../../services/api' 
 import { IFormData } from "../login/types";
-import { IUser } from "../login/types";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const schema = yup.object({
         email: yup.string().email('O e-mail não é válido').required('Campo obrigatório'),
@@ -19,33 +18,15 @@ const schema = yup.object({
     }).required()
 
 const SignUp = () => {
-    const navigate = useNavigate();
+    const {handleSignUp} = useAuth();
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
         mode: 'onChange',
     });
-
     
-    // console.log(isValid, errors)
-
     const onSubmit = async (formData: IFormData) => {
-        try{
-            //verifica se ja existe um usuário cadastrado com esse email
-            const { data: allUsers } = await api.get('/users');
-            console.log(allUsers);
-            const checkEmail = allUsers.find((user:IUser) => user.email === formData.email);
-
-            if(!checkEmail){
-                const { data } = await api.post('/users', formData);
-                alert('Usuário cadastrado com sucesso!');
-            } else {
-                alert('Usuário com e-mail já cadastrado.')
-            }
-            
-        }catch{
-            alert('Houve um erro, tente novamente.')
-        }
+        handleSignUp(formData);
     };
     
 
@@ -70,7 +51,9 @@ const SignUp = () => {
                         </form>
                         <Row>
                             <EsqueciText>Ao clicar em "criar minha conta grátis", declaro que aceito as Políticas de Privacidade e os Termos de Uso da DIO.</EsqueciText>
-                            <CriarText>Já tenho conta.</CriarText>
+                            <Link to='/login'>
+                                <CriarText>Já tenho conta.</CriarText>
+                            </Link>
                         </Row>
                     </Wrapper>
                 </Column>

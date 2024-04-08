@@ -7,13 +7,15 @@ import {
     MenuRight,
     Row,
     UserPicture,
-    Wrapper
+    Wrapper,
+    ButtonContainer,
 } from './styles';
 import { Button } from '../Button';
-import { useNavigate } from "react-router-dom";
-import { IHeader } from './types';
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../../hooks/useAuth';
 
-const Header = ({authenticated}: IHeader) => {
+const Header = () => {
+    const { user, handleSignOut } = useAuth();
     const navigate = useNavigate();
 
     const navigateSignIn = () => {
@@ -21,15 +23,18 @@ const Header = ({authenticated}: IHeader) => {
     }
 
     const navigateSignUp = () => {
-        navigate('/')
+        navigate('/cadastro')
     }
 
     return (
         <Wrapper>
             <Container>
                 <Row>
-                    <img src={logo} alt="Logo da dio"/>
-                    {authenticated ? (
+                    <Link to="/">
+                        <img src={logo} alt="Logo da dio"/>
+                    </Link>
+                    
+                    {user.id ? (
                         <>
                             <BuscarInputContainer>
                             <Input placeholder='Buscar...'/>
@@ -40,13 +45,18 @@ const Header = ({authenticated}: IHeader) => {
                     ) : null}
                 </Row>
                 <Row>
-                    {authenticated ? (
-                        <UserPicture src="https://avatars.githubusercontent.com/u/99506836?s=400&u=ad14ced68b75d624fa3455075c12510175883379&v=4"/>
+                    {user.id ? (
+                        <>
+                            <UserPicture src="https://avatars.githubusercontent.com/u/99506836?s=400&u=ad14ced68b75d624fa3455075c12510175883379&v=4"/>
+                            <Menu onClick={handleSignOut}>Sair</Menu>                      
+                        </>
                     ) : (
                         <>
-                            <MenuRight href="#">Home</MenuRight>
-                            <Button title="Entrar" onClick={navigateSignIn}/>
-                            <Button title="Cadastrar" onClick={navigateSignUp}/>
+                            <MenuRight href="/">Home</MenuRight>
+                            <ButtonContainer>
+                                <Button title="Entrar" onClick={navigateSignIn}/>
+                                <Button title="Cadastrar" onClick={navigateSignUp}/>                                
+                            </ButtonContainer>
                         </>
                     )}
                 </Row>
