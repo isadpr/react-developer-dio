@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { api } from '../../services/api' 
+import { IFormData } from "../login/types";
+import { IUser } from "../login/types";
 
 const schema = yup.object({
         email: yup.string().email('O e-mail não é válido').required('Campo obrigatório'),
@@ -24,16 +26,23 @@ const SignUp = () => {
         mode: 'onChange',
     });
 
+    
     // console.log(isValid, errors)
 
-    const onSubmit = async formData => {
+    const onSubmit = async (formData: IFormData) => {
         try{
-            const { data } = await api.get(`users?email=${formData.email}&senha=${formData.password}`)
-            if(data.length === 1) {
-                navigate('/feed')
+            //verifica se ja existe um usuário cadastrado com esse email
+            const { data: allUsers } = await api.get('/users');
+            console.log(allUsers);
+            const checkEmail = allUsers.find((user:IUser) => user.email === formData.email);
+
+            if(!checkEmail){
+                const { data } = await api.post('/users', formData);
+                alert('Usuário cadastrado com sucesso!');
             } else {
-                alert('Email ou senha inválidos')
+                alert('Usuário com e-mail já cadastrado.')
             }
+            
         }catch{
             alert('Houve um erro, tente novamente.')
         }
